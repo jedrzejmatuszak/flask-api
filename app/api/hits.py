@@ -1,20 +1,44 @@
 from app.api import bp
 
 
-# na POST tworzy nowy hit na podstawie przekazanego obiektu: artistID, title
-@bp.route('/api/v1/hits')
+# [GET] wyświetla listę 20 hitów
+# [POST] tworzy nowy hit na podstawie przekazanego obiektu: artistID, title
+"""
+[
+    {
+        id: <hitId>,
+        title: <title>,
+        _titleUrl: <titleUrl>
+    }
+    {
+        id: <hitId>,
+        title: <title>,
+        _titleUrl: <titleUrl>
+    }
+]
+"""
+@bp.route('/api/v1/hits', methods=['GET', 'POST'])
 def get_hits():
     pass
 
 
-# można zaktualizować tylko: artistId, 'title' oraz 'title_url' + automatyczne
-# wypełnienie pola updated_at
-@bp.route('/api/v1/hits/<string:title_url>')
+# [GET] wyświetla szczegóły pojedynczego hitu
+# [PUT] aktualizuje wybrany hit (tylko pola artist_id, title, title_url
+# i automatycznie wypełnia pole updated_at
+# [DELETE] usuwa wybrany hit
+"""
+{
+    id: <hitId>,
+    title: <title>,
+    _titleUrl: <titleUrl>,
+    createdAt: <createdAt>,
+    artist: {
+        id: <artistId>
+        firstName: <firstName>
+        lastName: <lastName>
+    }
+}
+"""
+@bp.route('/api/v1/hits/<string:title_url>', methods=['GET', 'PUT', 'DELETE'])
 def get_title(title_url):
-    pass
-
-
-# usuwa wybrany hit
-@bp.route('/api/v1/hits/<string:title_url>')
-def delete_hit(title_url):
     pass
