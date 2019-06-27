@@ -18,6 +18,8 @@ ENV FLASK_APP task.py
 
 RUN chown -R task:task ./
 USER task
+RUN flask populatedb artists
+RUN flask populatedb hits
 
 EXPOSE 5000
 ENTRYPOINT ["./boot.sh"]
