@@ -1,8 +1,9 @@
 #!/bin/sh
-source venv/bin/activate
 while true; do
     flask db upgrade
     if [[ "$?" == "0" ]]; then
+        flask populatedb artists
+        flask populatedb hits
         break
     fi
     echo Upgrade command failed, retrying in 5 secs...

@@ -5,9 +5,8 @@ RUN adduser -D task
 WORKDIR /home/task
 
 COPY requirements.txt requirements.txt
-RUN python3 -m venv venv
-RUN venv/bin/pip install -r requirements.txt
-RUN venv/bin/pip install gunicorn pymysql
+RUN pip install -r requirements.txt
+RUN pip install gunicorn pymysql
 
 COPY app app
 COPY migrations migrations
@@ -18,8 +17,6 @@ ENV FLASK_APP task.py
 
 RUN chown -R task:task ./
 USER task
-RUN flask populatedb artists
-RUN flask populatedb hits
 
 EXPOSE 5000
 ENTRYPOINT ["./boot.sh"]

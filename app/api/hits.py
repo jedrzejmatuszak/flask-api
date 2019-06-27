@@ -43,10 +43,13 @@ def get_title(title_url):
 @bp.route('/v1/hits/<string:title_url>', methods=['PUT'])
 def update_title(title_url):
     mod_hit = Hits.query.filter_by(title_url=title_url).first()
-    data = request.get_json() or {}
-    mod_hit.from_dict(data)
-    db.session.commit()
-    return jsonify(mod_hit.to_dict())
+    if mod_hit:
+        data = request.get_json() or {}
+        mod_hit.from_dict(data)
+        db.session.commit()
+        return jsonify(mod_hit.to_dict())
+    else:
+        return error_response(204, 'NO CONTENT')
 
 
 # [DELETE] usuwa wybrany hit
