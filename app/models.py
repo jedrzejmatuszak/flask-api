@@ -24,19 +24,23 @@ class Hits(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     @staticmethod
-    def generate_title_url(target, value, oldvalue):
+    def generate_title_url(target, value, oldvalue, initializator):
         if value and (not target.title_url or value != oldvalue):
             target.title_url = slugify(value)
 
     def __repr__(self):
         return f'<{self.title}>'
 
-    def to_dict_get(self):
-        data = {
-                    'id': self.id,
-                    'title': self.title,
-                    'title_url': self.title_url
-        }
+    @staticmethod
+    def to_dict_collection(query):
+        data = []
+        temp_dict = {}
+        for hit in query:
+            temp_dict['id'] = hit.id
+            temp_dict['title'] = hit.title
+            temp_dict['title_url'] = hit.title_url
+            data.append(temp_dict)
+            temp_dict = {}
         return data
 
     def to_dict(self):
@@ -53,15 +57,19 @@ class Hits(db.Model):
         }
         return data
 
-    def from_dict_post(self, data):
-        for field in ['id', 'title']:
-            if field in data:
-                setattr(self, field, data[field])
-
-    def from_dict_put(self, data):
+    def from_dict(self, data):
         for field in ['artist_id', 'title']:
             if field in data:
                 setattr(self, field, data[field])
+
+    @staticmethod
+    def delete_hit(hit):
+        data = {
+            'id': hit.id,
+            'title': hit.title,
+            'message': f'Hit {hit.title} has been deleted'
+        }
+        return data
 
 
 event.listen(Hits.title, 'set', Hits.generate_title_url, retval=False)
