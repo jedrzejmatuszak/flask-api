@@ -6,17 +6,23 @@ Create directory, where you clone repo:
     mkdir task
     cd task
 
-Create virtual environment
+Create and start virtual environment
 
     python3 -m venv venv    
-
+    source venv/bin/activate
+    
 Clone repo:
 
     git clone <link-to-repo>
 
+Go to app directory
+
+    cd flask-api/
+
 Install require packages
 
     pip install -r requirements.txt
+    
 
 Upgrade database
 
