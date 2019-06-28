@@ -49,7 +49,7 @@ def update_title(title_url):
         db.session.commit()
         return jsonify(mod_hit.to_dict())
     except:
-        return error_response(204, 'NO CONTENT')
+        return bad_request('BAD REQUEST')
 
 
 # [DELETE] usuwa wybrany hit
