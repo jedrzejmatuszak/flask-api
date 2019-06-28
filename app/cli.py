@@ -23,7 +23,7 @@ def register(app):
     @populatedb.command()
     def hits():
         if len(Artists.query.all()) == 0:
-            raise RuntimeError('Populate hits failed. First populate Artists.')
+            raise RuntimeError("Populate hits failed. First populate Artists.")
         for i in tqdm(range(200)):
             h = Hits(artist_id=randint(1, 50), title=fake.sentence())
             db.session.add(h)
